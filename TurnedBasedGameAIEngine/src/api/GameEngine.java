@@ -54,13 +54,13 @@ public class GameEngine {
             String firstCharacter = "-";
             boolean rowComplete = true;
             for(int i=0;i<3;i++) {
-                rowComplete = true;
+                // rowComplete = true;
                 // these cells as default types will not be accessible
                 // firstCharacter = board1.cells[i][0];
                 // Where to put this getCell method??
                 // -- If boards cn exist without cells then we should not put cells in boards.
                 firstCharacter = board1.getCell(i, 0);
-
+                // Below FIX is of poor quality but many production systems are unfortunately built with like them
                 rowComplete = firstCharacter!=null; // FIX: java.lang.NullPointerException
                 if(firstCharacter!=null) { // FIX: java.lang.NullPointerException
                     for(int j=1;j<3;j++) {
@@ -69,7 +69,7 @@ public class GameEngine {
                         //ERROR: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "boards.TicTacToeBoard.getCell(int, int)" is null
 
                         // if(!(board1.getCell(i, j)).equals(firstCharacter)) {
-                        if(!(firstCharacter.equals(board1.getCell(i, j)))) {
+                        if(!firstCharacter.equals(board1.getCell(i, j))) {
                             rowComplete = false;
                             break; // optimisation1
                         }
@@ -94,8 +94,7 @@ public class GameEngine {
                         // ERROR: Cannot invoke "String.equals(Object)" because the return value of "boards.TicTacToeBoard.getCell(int, int)" is null
 
                         // if(!(board1.getCell(j, i)).equals(firstCharacter)) {
-                        if(!(firstCharacter).equals(board1.getCell(j, i))) {
-
+                        if(!firstCharacter.equals(board1.getCell(j, i))) {
                             colComplete = false;
                             break;
                         }
@@ -107,12 +106,12 @@ public class GameEngine {
                 return new GameResult(true, firstCharacter);
             }
 
-            boolean diagComplete = true;
             firstCharacter = board1.getCell(0, 0);
+            boolean diagComplete = firstCharacter!=null;
             for(int i=0;i<3;i++) {
                 // diagComplete = true;
                 // if(firstCharacter!=null && !(board1.getCell(i, i).equals(firstCharacter))) {
-                if(firstCharacter!=null && !(firstCharacter.equals(board1.getCell(i, i)))) {
+                if(firstCharacter!=null && !firstCharacter.equals(board1.getCell(i, i))) {
                     diagComplete = false;
                     break;
                 }
@@ -122,11 +121,11 @@ public class GameEngine {
                 return new GameResult(true, firstCharacter);
             }
 
-            boolean revDiagComplete = true;
             firstCharacter = board1.getCell(0, 2); //board1.cells[0][2];
+            boolean revDiagComplete = firstCharacter!=null;
             for(int i=0;i<3;i++) {
                 // revDiagComplete = true;
-                if(firstCharacter!=null &&  !(board1.getCell(i, 2-i)).equals(firstCharacter )) {
+                if(firstCharacter!=null &&  !firstCharacter.equals(board1.getCell(i, 2-i))) {
                     revDiagComplete = false;
                     break;
                 }

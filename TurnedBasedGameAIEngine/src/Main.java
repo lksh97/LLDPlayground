@@ -15,7 +15,7 @@ public class Main {
         int row, col;
 
         //make moves in a loop
-        while(gameEngine.isComplete(board).isOver()) {
+        while(!gameEngine.isComplete(board).isOver()) {
             Player computer = new Player("O"), human = new Player("X");
             System.out.println("Make your move!");
 

@@ -18,14 +18,14 @@ public class TicTacToeBoard extends Board {
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for(int i=0;i<3;i++) {
             for(int j=0;j<3;j++) {
-                result += cells[i][j];
+                result.append(cells[i][j]==null? "-" : cells[i][j]);
             }
-            result+="\n";
+            result.append("\n");
         }
 
-        return result;
+        return result.toString();
     }
 }
