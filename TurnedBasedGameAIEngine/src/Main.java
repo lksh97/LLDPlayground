@@ -6,34 +6,49 @@ import game.Player;
 import game.Move;
 import game.Cell;
 
+/**
+ * Main class to run the TicTacToe game using GameEngine.
+ *
+ * The user plays against a basic AI (computer) that picks the first available cell.
+ */
 public class Main {
     public static void main(String[] args) {
-        
+        // Initialize game engine and start a TicTacToe game
         GameEngine gameEngine = new GameEngine();
         Board board = gameEngine.start("TicTacToe");
-        Scanner scanner = new Scanner(System.in);;
-        int row, col;
 
-        //make moves in a loop
-        while(!gameEngine.isComplete(board).isOver()) {
-            Player computer = new Player("O"), human = new Player("X");
-            System.out.println("Make your move!");
+        // Scanner to read user input
+        Scanner scanner = new Scanner(System.in);
 
-            System.out.println(board);
+        // Define players
+        Player human = new Player("X");
+        Player computer = new Player("O");
 
-            row = scanner.nextInt();
-            col = scanner.nextInt();
+        // Main game loop: continues until game is over
+        while (!gameEngine.isComplete(board).isOver()) {
+            System.out.println("Your Move (Enter row and column between 0-2):");
+            System.out.println(board); // Show current state of the board
 
-            Move oppMove = new Move(new Cell(row, col));
-            gameEngine.move(board, human, oppMove);
+            // Read user input for move
+            int row = scanner.nextInt();
+            int col = scanner.nextInt();
 
-            if(!gameEngine.isComplete(board).isOver()) {
+            // Create move object and update board with human move
+            Move humanMove = new Move(new Cell(row, col), human);
+            gameEngine.move(board, humanMove);
+
+            // If the game isn't over after human move, let computer make a move
+            if (!gameEngine.isComplete(board).isOver()) {
                 Move computerMove = gameEngine.suggestMove(computer, board);
-                gameEngine.move(board, computer, computerMove);
+                gameEngine.move(board, computerMove);
             }
         }
 
-        System.out.println("GameResult: "+ gameEngine.isComplete(board));
-        System.out.println(board);
+        // Game has ended; print final result and board
+        System.out.println("Game Over!");
+        System.out.println("Result: " + gameEngine.isComplete(board)); // Shows winner or draw
+        System.out.println(board); // Final board state
+
+        scanner.close();
     }
 }
